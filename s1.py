@@ -1,40 +1,28 @@
 # Author: Aniketh S Deshpande
 # Flask-Server
+# MongoDB Database 
 
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from flask_restful import Resource, Api
+from flask_pymongo import PyMongo
 
 app = Flask(__name__)
+app.config["MONGO_URI"] = "mongodb://localhost:27017/q"
 api = Api(app)
+mongo = PyMongo(app)
 
-# f is a flower name
-q = {
-    "f1": {
-        "size": 4,
-        "skip_count": 0
-    },
-    "f2": {
-        "size": 8,
-        "skip_count": 1
-    },
-    "f3": {
-        "size": 5,
-        "skip_count": 0
-    }
-}
 
 class Q_entries(Resource):
-    global q
     def get(self):
-        return q
-    
-    def post(self):
-        new_flower = request.get_json()
-        return {'your_details': new_flower}
+        q_array = []
+        for item in mongo.db.q.find():
+            q_array.append([item['name'],  int(item['size']), int(item['skip_count'])])
+        return {'queue': q_array}
+
 
 # resources routing
 api.add_resource(Q_entries, '/q_entries')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='192.168.43.27')
 
