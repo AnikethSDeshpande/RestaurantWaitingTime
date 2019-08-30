@@ -1,3 +1,5 @@
+# Author: Aniketh S Deshpande
+
 # Python3 implementation of Best - Fit algorithm 
 
 # Function to allocate memory to blocks 
