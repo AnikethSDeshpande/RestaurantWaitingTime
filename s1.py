@@ -10,10 +10,16 @@ api = Api(app)
 # f is a flower name
 q = {
     "f1": {
-        "size": 4
+        "size": 4,
+        "skip_count": 0
     },
     "f2": {
-        "size": 8
+        "size": 8,
+        "skip_count": 1
+    },
+    "f3": {
+        "size": 5,
+        "skip_count": 0
     }
 }
 
