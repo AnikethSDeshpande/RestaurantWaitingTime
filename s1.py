@@ -8,16 +8,11 @@ app = Flask(__name__)
 api = Api(app)
 
 # f is a flower name
-q = {["f1": {
+q = {
+    "f1": {
         "size": 4
-    },
-    "f2": {
-        "size": 6
-    },
-    "f3": {
-        "size": 2
     }
-]}
+}
 
 class Q_insert(Resource):
     global q
