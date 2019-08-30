@@ -16,8 +16,27 @@ class Q_entries(Resource):
     def get(self):
         q_array = []
         for item in mongo.db.q.find():
-            q_array.append([item['name'],  int(item['size']), int(item['skip_count'])])
+            q_array.append([item['name'],  int(item['size']), int(item['skip_count']), int(item['position']) ])
         return {'queue': q_array}
+    
+    def post(self):
+        obj = request.get_json(force=True)
+        mongo.db.q.insert(obj)
+        return {'object_posted': str(obj)}
+
+    def update(self):
+        obj = request.get_json(force=True)
+        name, new_skip_count, new_position = obj['name'], obj['new_skip_count'], obj['new_position']
+        mongo.db.q.update({'name': name}, {'$set':{'skip_count': new_skip_count, 'position': new_position}})
+        return {'object_updated': str(obj)}
+        
+    def delete(self):
+        obj = request.get_json(force=True)
+        name = obj['name']
+        mongo.db.q.delete({'name': name})
+        return {'object_deleted': str(obj)}
+
+
 
 
 # resources routing
