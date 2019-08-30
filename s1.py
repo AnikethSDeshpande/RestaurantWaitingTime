@@ -11,16 +11,19 @@ api = Api(app)
 q = {
     "f1": {
         "size": 4
+    },
+    "f2": {
+        "size": 8
     }
 }
 
-class Q_insert(Resource):
+class Q_entries(Resource):
     global q
     def get(self):
         return q
 
 # resources routing
-api.add_resource(Q_insert, '/q_insert')
+api.add_resource(Q_entries, '/q_entries')
 
 if __name__ == '__main__':
     app.run(debug=True)
